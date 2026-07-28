@@ -1,7 +1,6 @@
-﻿using System;
-
-public enum PokemonType
+﻿public enum PokemonType
 {
+    Placeholder,
     Fire,
     Water,
     Electric,
@@ -70,16 +69,19 @@ public class Pokemon
         speed = 22;
         type = PokemonType.Grass;
     }
+
+    public int level = 15;
     public int health;
     public int speed;
     public int attack;
     public PokemonType type;
     public int defense;
     public string choice;
+    string selectionChoice = "Please select between the following pokemon: Charmander, pikachu, squirtle, bulbasaur, or random.";
 
     public virtual void Selection()
-    { 
-            Console.WriteLine("Please select between the following pokemon: Charmander, pikachu, squirtle, bulbasaur, or random.");
+    {
+            Console.WriteLine(selectionChoice);
             choice = Console.ReadLine().ToLower();
             if (choice == "random")
             {
@@ -106,39 +108,18 @@ public class Pokemon
                 Console.WriteLine("Please retype your response as written below.");
             }
     }
-}
-
-public class User : Pokemon { }
-public class Opponent : Pokemon
-{
-    public override void Selection()
-    { 
-            Console.WriteLine("Player2 please select the pokemon you want: Charmander, pikachu, squirtle, bulbasaur, or random.");
-            choice = Console.ReadLine().ToLower();
-            if (choice == "random")
-            {
-                RandomChoice();
-            }
-            else if (choice == "charmander")
-            {
-                Charmander();
-            }
-            else if (choice == "pikachu")
-            {
-                Pikachu();
-            }
-            else if (choice == "squirtle")
-            {
-                Squirtle();
-            }
-            else if (choice == "bulbasaur")
-            {
-                Bulbasaur();
-            }
-            else
-            {
-                Console.WriteLine("Please retype your response as written below.");
-            }
+    public void Move()
+    {
+        int movePower;
+        int moveAccuracy;
+        PokemonType moveType = PokemonType.Placeholder;
+        int moveCritical = 1;
+        Double STAB = 1;
+        if (moveType == type)
+        {
+            STAB = 1.5;
+        }
+        
     }
 }
 
@@ -154,9 +135,9 @@ public class Game
 {
     public static void Main()
     {
-        User Player1 = new User();
+        Pokemon Player1 = new Pokemon();
         Player1.Selection();
-        Opponent Player2 = new Opponent();
+        Pokemon Player2 = new Pokemon();
         Player2.Selection();
     }
 }
