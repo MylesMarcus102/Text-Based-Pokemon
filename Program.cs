@@ -4,9 +4,17 @@
     Fire,
     Water,
     Electric,
-    Grass
+    Grass,
+    Normal
 }
 
+public enum Status
+{
+    None,
+    Burned,
+    Paralyzed,
+    Sleep
+}
 public class Pokemon
 {
     public void RandomChoice()
@@ -69,7 +77,6 @@ public class Pokemon
         speed = 22;
         type = PokemonType.Grass;
     }
-
     public int level = 15;
     public int health;
     public int speed;
@@ -77,7 +84,7 @@ public class Pokemon
     public PokemonType type;
     public int defense;
     public string choice;
-    string selectionChoice = "Please select between the following pokemon: Charmander, pikachu, squirtle, bulbasaur, or random.";
+    public string selectionChoice = "Please select between the following pokemon: Charmander, pikachu, squirtle, bulbasaur, or random.";
 
     public virtual void Selection()
     {
@@ -108,18 +115,31 @@ public class Pokemon
                 Console.WriteLine("Please retype your response as written below.");
             }
     }
-    public void Move()
+}
+
+
+public class Move
+{
+    public string Name{get;set;}
+    public PokemonType Type{get;set;}
+    public int Power{get;set;}
+    public int Accuracy{get;set;}
+    public int CurrentPP{get;set;}
+    public int MaxPP{get;set;}
+    public int Priotiry{get;set;}
+    public Status Status{get;set;}
+    public int StatusChance{get;set;}
+    public Move(string name, PokemonType type, int power, int accuracy, int currentPP, int maxPP, int priotiry, Status status, int statuschance)
     {
-        int movePower;
-        int moveAccuracy;
-        PokemonType moveType = PokemonType.Placeholder;
-        int moveCritical = 1;
-        Double STAB = 1;
-        if (moveType == type)
-        {
-            STAB = 1.5;
-        }
-        
+        Name = name;
+        Type = type;
+        Power = power;
+        Accuracy = accuracy;
+        CurrentPP = currentPP;
+        MaxPP = maxPP;
+        Priotiry = priotiry;
+        Status = status;
+        StatusChance = statuschance;
     }
 }
 
@@ -138,6 +158,17 @@ public class Game
         Pokemon Player1 = new Pokemon();
         Player1.Selection();
         Pokemon Player2 = new Pokemon();
+        Player2.selectionChoice = "Player2 please select between the following pokemon: Charmander, pikachu, squirtle, bulbasaur, or random.";
         Player2.Selection();
+        Console.WriteLine($"Player 1 chose {Player1.choice} and Player 2 chose {Player2.choice}");
+        var MoveDataBase = new Dictionary<string, Move>();
+        MoveDataBase.Add("tackle", new Move("tackle", PokemonType.Normal,40,100,35,35,0, Status.None,0));
+        MoveDataBase.Add("ember", new Move("ember", PokemonType.Fire,40,100,25,25,0, Status.None,10));
+        MoveDataBase.Add("water gun", new Move("water gun", PokemonType.Water,40,100,25,25,0,Status.None,0));
+        MoveDataBase.Add("thunder shock", new Move("thunder shock", PokemonType.Electric,40,100,30,30,0,Status.Paralyzed,10));
+        MoveDataBase.Add("vine whip", new Move("vine whip", PokemonType.Grass,45,100,25,25,0, Status.None,0));
+        MoveDataBase.Add("scratch", new Move("scratch", PokemonType.Normal,40,100,35,35,0, Status.None,0));
+        MoveDataBase.Add("quick attack", new Move("quick attack", PokemonType.Normal,40,100,35,30,1, Status.None,0));
+        MoveDataBase.Add("thunder wave", new Move("thunder wave", PokemonType.Electric,0,100,20,20,0,Status.Paralyzed,90));
     }
 }
